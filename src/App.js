@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Main from "./components/Main";
+import Sidebar from "./components/Sidebar";
+import Service from "./components/Service";
+import { useState } from "react";
+import Config from "./components/Config";
+import User from "./components/User";
+import "reactjs-popup/dist/index.css";
 function App() {
+  const [show, setShow] = useState("home");
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="grid grid-cols-12 min-h-[800px] modal">
+      <Sidebar show={show} setShow={setShow} />
+      {show === "home" ? <Main /> : show === "config" ? <Config /> : <User />}
+      {show === "home" ? <Service /> : <></>}
     </div>
   );
 }
