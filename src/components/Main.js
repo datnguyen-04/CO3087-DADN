@@ -3,6 +3,8 @@ import { faUser, faCloud, faSun } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FanControl from "./FanControl";
 import Light from "./Light";
+
+import HoldToUnlockButton from "./HoldToUnlockButton";
 function Main() {
   const [now, setNow] = useState(new Date());
   // mot fetch du lieu
@@ -76,7 +78,10 @@ function Main() {
         <div className="grid grid-cols-3 gap-5">
           <FanControl />
           <div className="col-span-1 p-4 bg-white rounded-xl shadow">
-            <div>Lock</div>
+            <div className="mb-2">Lock</div>
+            <div className="flex justify-center items-center ">
+              <HoldToUnlockButton />
+            </div>
           </div>
           <Light />
         </div>
