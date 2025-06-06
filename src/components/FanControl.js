@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from "react";
-import SwitchUserDefine from "./SwitchUserDefine";
 
 const ADAFRUIT_AIO_KEY = "aio_Thil57EjxHNQScTLwXlHio8mCGpJ";
 const FanControl = () => {
   const [fanOn, setFanOn] = useState(true);
   const [fanSpeed, setFanSpeed] = useState(20);
-  const percentage = (fanSpeed / 40) * 100; // phần trăm tiến trình
+  const percentage = fanSpeed;
   useEffect(() => {
     const sendFanStatus = async () => {
       // const value = fanOn ? 1 : 0;
-
       // try {
       //   await fetch(
       //     "https://io.adafruit.com/api/v2/datio04/feeds/bbc-fan/data",
@@ -33,17 +31,14 @@ const FanControl = () => {
   const handleSendFanSpeed = async () => {
     if (!fanOn) return;
     try {
-      await fetch(
-        "https://io.adafruit.com/api/v2/datio04/feeds/bbc-fan/data",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-AIO-Key": ADAFRUIT_AIO_KEY,
-          },
-          body: JSON.stringify({ value: fanSpeed }),
-        }
-      );
+      await fetch("https://io.adafruit.com/api/v2/datio04/feeds/bbc-fan/data", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-AIO-Key": ADAFRUIT_AIO_KEY,
+        },
+        body: JSON.stringify({ value: fanSpeed }),
+      });
     } catch (error) {
       console.error("Lỗi khi gửi tốc độ quạt:", error);
     }
@@ -53,10 +48,9 @@ const FanControl = () => {
     <div className="col-span-1 p-4 bg-white rounded-xl shadow">
       <div className="flex justify-between items-center mb-2">
         <span className="text-gray-800 font-medium">Fan</span>
-        <SwitchUserDefine toggleOn={fanOn} settoggleOn={setFanOn} />
       </div>
       <div className="flex justify-between text-xs text-gray-500 mt-2 px-1 mb-2">
-        {[0, 10, 20, 30, 40].map((val) => (
+        {[0, 25, 50, 75, 100].map((val) => (
           <span key={val}>{val}</span>
         ))}
       </div>
@@ -80,7 +74,7 @@ const FanControl = () => {
         <input
           type="range"
           min={0}
-          max={40}
+          max={100}
           value={fanSpeed}
           onChange={(e) => setFanSpeed(Number(e.target.value))}
           onMouseUp={handleSendFanSpeed}
