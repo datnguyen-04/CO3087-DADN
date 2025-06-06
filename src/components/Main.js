@@ -5,6 +5,7 @@ import FanControl from "./FanControl";
 import Light from "./Light";
 import HoldToUnlockButton from "./HoldToUnlockButton";
 import TemperatureChart from "./TemperatureChart";
+import HumidityChart from "./HumidityChart";
 function Main() {
   const [now, setNow] = useState(new Date());
   // mot fetch du lieu
@@ -86,8 +87,11 @@ function Main() {
           <Light />
         </div>
       </div>
-      <div className="mt-20">
+      <div className="mt-10">
         <TemperatureChart />
+      </div>
+      <div className="mt-10">
+        <HumidityChart/>
       </div>
     </div>
   );
