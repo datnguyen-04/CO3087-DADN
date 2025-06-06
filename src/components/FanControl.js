@@ -1,30 +1,30 @@
 import React, { useState, useEffect } from "react";
 import SwitchUserDefine from "./SwitchUserDefine";
 
-const ADAFRUIT_AIO_KEY = "aio_BsGC87YwoeQ9SOTCj6tk8e73DRcj";
+const ADAFRUIT_AIO_KEY = "aio_Thil57EjxHNQScTLwXlHio8mCGpJ";
 const FanControl = () => {
   const [fanOn, setFanOn] = useState(true);
   const [fanSpeed, setFanSpeed] = useState(20);
   const percentage = (fanSpeed / 40) * 100; // phần trăm tiến trình
   useEffect(() => {
     const sendFanStatus = async () => {
-      const value = fanOn ? 1 : 0;
+      // const value = fanOn ? 1 : 0;
 
-      try {
-        await fetch(
-          "https://io.adafruit.com/api/v2/danhdangcong/feeds/fan/data",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-AIO-Key": ADAFRUIT_AIO_KEY,
-            },
-            body: JSON.stringify({ value }),
-          }
-        );
-      } catch (error) {
-        console.error("Lỗi khi gửi dữ liệu:", error);
-      }
+      // try {
+      //   await fetch(
+      //     "https://io.adafruit.com/api/v2/datio04/feeds/bbc-fan/data",
+      //     {
+      //       method: "POST",
+      //       headers: {
+      //         "Content-Type": "application/json",
+      //         "X-AIO-Key": ADAFRUIT_AIO_KEY,
+      //       },
+      //       body: JSON.stringify({ value }),
+      //     }
+      //   );
+      // } catch (error) {
+      //   console.error("Lỗi khi gửi dữ liệu:", error);
+      // }
     };
 
     sendFanStatus();
@@ -34,7 +34,7 @@ const FanControl = () => {
     if (!fanOn) return;
     try {
       await fetch(
-        "https://io.adafruit.com/api/v2/danhdangcong/feeds/fanspeed/data",
+        "https://io.adafruit.com/api/v2/datio04/feeds/bbc-fan/data",
         {
           method: "POST",
           headers: {

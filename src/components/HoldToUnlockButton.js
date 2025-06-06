@@ -3,13 +3,13 @@ import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Lock, Unlock } from "lucide-react";
 
-const ADAFRUIT_AIO_USERNAME = "danhdangcong";
-const ADAFRUIT_AIO_KEY = "aio_BsGC87YwoeQ9SOTCj6tk8e73DRcj";
+const ADAFRUIT_AIO_USERNAME = "datio04";
+const ADAFRUIT_AIO_KEY = "aio_Thil57EjxHNQScTLwXlHio8mCGpJ";
 
 const sendLockStatus = async (status) => {
   try {
     await axios.post(
-      `https://io.adafruit.com/api/v2/${ADAFRUIT_AIO_USERNAME}/feeds/lock/data`,
+      `https://io.adafruit.com/api/v2/${ADAFRUIT_AIO_USERNAME}/feeds/door/data`,
       { value: status },
       {
         headers: {
@@ -38,9 +38,15 @@ const HoldToUnlockButton = () => {
 
     holdTimer.current = setTimeout(() => {
       setLocked(false);
-      sendLockStatus("0"); // Mở khóa
+      sendLockStatus("1"); // Mở khóa
       setHolding(false);
       clearInterval(rippleInterval.current);
+
+      setTimeout(() => {
+        setLocked(true);
+        sendLockStatus("0");
+        setRipples([]); 
+      }, 3000);
     }, 3000);
 
     rippleInterval.current = setInterval(() => {
@@ -52,12 +58,6 @@ const HoldToUnlockButton = () => {
     clearTimeout(holdTimer.current);
     clearInterval(rippleInterval.current);
     setHolding(false);
-  };
-
-  const handleLock = () => {
-    setLocked(true);
-    setRipples([]);
-    sendLockStatus("1"); // Khóa lại
   };
 
   return (
@@ -88,15 +88,6 @@ const HoldToUnlockButton = () => {
           <Unlock className="text-white w-8 h-8" />
         )}
       </button>
-
-      {!locked && (
-        <button
-          onClick={handleLock}
-          className="text-sm px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
-        >
-          Relock
-        </button>
-      )}
     </div>
   );
 };
